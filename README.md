@@ -14,3 +14,6 @@ Seven segment display: 3 digit seven sigment display driven using 74HC595. Conne
 Triac: Any triac that can handle 10A or more can be used. Connected to arduino pin 9.
 
 Buzzer: Makes beep only when the motor is off. Connected to arduino pin 12.
+
+Program uploaded to board on 9 - August - 2018
+Triac used is BTA 12
