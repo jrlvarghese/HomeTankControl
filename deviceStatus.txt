@@ -1,0 +1,12 @@
+First installed on Aug 2018
+
+Stopped working on september 2019: (Problem with the switching hardware, MOC3041 is damaged)
+
+October 14, 2019: Switching hardware problem rectified, a circuit as described in motorolla MOC3041 datasheet is used.
+                  
+                  http://exa.unne.edu.ar/ingenieria/sysistemas/public_html/Archi_pdf/HojaDatos/Optoelectronica/moc3041.pdf 
+                  
+                  Input resistor used is 220 ohms (earlier a blue LED used in series)
+                  
+                  Output circuit is modified, earlier output to the gate (BTA12) is given only through single resistor (470 ohms), 
+                    from pin 4 of the optocoupler.
