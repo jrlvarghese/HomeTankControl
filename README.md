@@ -16,4 +16,5 @@ Buzzer: Makes beep only when the motor is off. Connected to arduino pin 12.
 Triac used is BTA 12
 
 Program uploaded to board on 9 - August - 2018(version 1)
+
 Program uploaded to board on 11 - April - 2021 (version 1.1 without external switch)
