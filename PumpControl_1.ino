@@ -23,15 +23,15 @@
  
  const uint8_t tankLevelSensor = A0;  // Setting the analog pin A0 as the input pin
  const uint8_t motorDrivePin = 9;  // Pin number 8 will drive the motor
- const uint8_t motorSwitch = 2;  // Pin 7 will decide to ON or OFF the motor
+//  const uint8_t motorSwitch = 2;  // Pin 7 will decide to ON or OFF the motor
  const uint8_t buzzerPin = 12;  // Pin 12 is connected to the gate of a triac BT
  const uint8_t latchPin = 7;
  const uint8_t clockPin = 8;
  const uint8_t dataPin = 6;
  const int TANK_LEVEL_THRESHOLD = 560;  // Threshold value for the level sensor
  // VARIABLES THAT CHANGE IN RUNTIME
- volatile bool motorSwitchState = LOW;
- volatile unsigned long lastDebounceTime = 0;
+//  volatile bool motorSwitchState = LOW;
+//  volatile unsigned long lastDebounceTime = 0;
  bool motorState = LOW;
  bool tankIsFull = NOT_FULL;
 
@@ -50,17 +50,18 @@
   
   // OUTPUT PIN MODES ARE DEFINED HERE
   // Input pullup is enabled as the interrupt is activated on input low
-  pinMode(motorSwitch, INPUT_PULLUP);
+  // pinMode(motorSwitch, INPUT_PULLUP);
   pinMode(motorDrivePin, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
   digitalWrite(buzzerPin, LOW);  // Mute the buzzer while setting up everything
   // Interrupt is initiated, motor_control function is called when the interrupt is
   // activated, and is connected to pin 2, activated when the pin goes LOW
-  attachInterrupt(digitalPinToInterrupt(motorSwitch), motor_control, LOW);
+  // attachInterrupt(digitalPinToInterrupt(motorSwitch), motor_control, LOW);
   
   pinMode(latchPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(dataPin, OUTPUT);
+  delay(200);
   
   blank_display();
   delay(200);
@@ -76,20 +77,13 @@
   if(tankIsFull){
     count = 1;
   }
-  // Check whether power button is pressed or not
-  if(motorSwitchState == ON){// If the switch is pressed and state is high
-    // Check whether tank is full or not
-    if(tankIsFull){
-      motorState = OFF;
-    }
-    else{
-      motorState = ON;   
-    }    
-  }
-  else{// If the motorSwitchState is OFF then motor will be OFF
-    motorState = OFF;
-  }
 
+  if(tankIsFull){
+    motorState = OFF;
+  }else{
+    motorState = ON;
+  }
+  
   if((motorState == ON)&&(count == 0)){
     digitalWrite(motorDrivePin, ON);  // Switch on the motor
     Serial.println("Motor is ON.");
@@ -115,17 +109,17 @@
  /* ############## FUNCTIONS ###################### */
  /* Interrupt service routine
   */
-void motor_control()
-{
-  /* This function will be called when the interrupt is triggered
-   * Acts as a debounce swtich */
-  unsigned long presentTime = 0;
-  presentTime = millis();
-  if((presentTime - lastDebounceTime)>100){
-    motorSwitchState = !motorSwitchState;
-  }
-  lastDebounceTime = presentTime;
-}
+// void motor_control()
+// {
+//   /* This function will be called when the interrupt is triggered
+//    * Acts as a debounce swtich */
+//   unsigned long presentTime = 0;
+//   presentTime = millis();
+//   if((presentTime - lastDebounceTime)>100){
+//     motorSwitchState = !motorSwitchState;
+//   }
+//   lastDebounceTime = presentTime;
+// }
 
 /* Function that checks tank is full or not
  *  input arguments are the analog sensor pin and threshold sensor value
@@ -206,4 +200,3 @@ void beep(uint8_t pin)
   digitalWrite(pin, LOW); 
   delay(400);
 }
-
